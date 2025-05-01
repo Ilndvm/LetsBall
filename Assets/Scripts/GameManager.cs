@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [Header("Gameplay")]
     public GameObject ballPrefab;
     public Transform ballSpawnPoint;
+    public Transform padsParent; // Parent object holding all pads
 
     GameObject currentBall;
 
@@ -39,11 +40,17 @@ public class GameManager : MonoBehaviour
         if (CurrentState != GameState.Playing) return;
 
         CurrentState = GameState.Building;
-        if (currentBall != null) Destroy(currentBall);
+
+        GameObject[] allBalls = GameObject.FindGameObjectsWithTag("Ball");
+        foreach (GameObject ball in allBalls)
+        {
+            Destroy(ball);
+        }
 
         // re-enable building UI/controls
         BuildManager.Instance.EnableBuilding();
         UIManager.Instance.OnGameStopped();
+        ResetScripts();
     }
 
     // Called when the ball reaches the goal
@@ -52,5 +59,28 @@ public class GameManager : MonoBehaviour
         CurrentState = GameState.Building;
         UIManager.Instance.ShowWinScreen();
         Debug.Log("YOU WIN!");
+    }
+
+    public void ResetScripts()
+    {
+        if (padsParent == null)
+        {
+            Debug.LogWarning("Pads parent not assigned in GameManager.");
+            return;
+        }
+
+        foreach (Transform child in padsParent)
+        {
+            SplitterPad splitter = child.GetComponent<SplitterPad>();
+            if (splitter != null) splitter.Reset();
+
+            GrowPad growPad = child.GetComponent<GrowPad>();
+            if (growPad != null) growPad.Reset();
+
+            ShrinkPad shrinkPad = child.GetComponent<ShrinkPad>();
+            if (shrinkPad != null) shrinkPad.Reset();
+
+            // Add more pad types here if needed
+        }
     }
 }

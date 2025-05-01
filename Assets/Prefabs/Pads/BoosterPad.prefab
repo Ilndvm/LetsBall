@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7056741890717693123}
   - component: {fileID: 5109780612601596509}
   - component: {fileID: 7177301556711275425}
-  - component: {fileID: 7198806994592586825}
+  - component: {fileID: 7526559729116019571}
   m_Layer: 0
-  m_Name: JumpPad
+  m_Name: BoosterPad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 1992529283
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -7486966618002133862, guid: 9bb5a4784c37a2242aedece90c523b1b, type: 3}
+  m_Sprite: {fileID: 473976225, guid: 9bb5a4784c37a2242aedece90c523b1b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -135,7 +135,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &7198806994592586825
+--- !u!114 &7526559729116019571
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,7 +144,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 7296981599498229410}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c853211a8e0b154094fa8559918986d, type: 3}
+  m_Script: {fileID: 11500000, guid: 54bfe1aad24c6fc4dac6775a14a43ae0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 10
+  boostDirection: {x: 1, y: 0}
+  boostForce: 5
