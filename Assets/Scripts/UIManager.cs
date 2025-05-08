@@ -1,18 +1,18 @@
-// UIManager.cs
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-// Manages overall UI: build UI, pause, win screen, start/stop.
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
     [Header("UI References")]
-    public GameObject gameplayUI;  // build-phase UI root
-    public GameObject winPanel;    // shown on win
-    public GameObject pausePanel;  // pause menu
-    public GameObject startButton;
-    public GameObject stopButton;
+    [SerializeField] private GameObject gameplayUI;
+    [SerializeField] private GameObject winPanel;
+    [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject startButton;
+    [SerializeField] private GameObject stopButton;
+    [SerializeField] private ScrollRect blockSelectionPanel;
 
     bool uiHidden = false;
     bool isPaused = false;
@@ -30,6 +30,11 @@ public class UIManager : MonoBehaviour
         pausePanel.SetActive(false);
         startButton.SetActive(true);
         stopButton.SetActive(false);
+
+        if (blockSelectionPanel != null)
+        {
+            blockSelectionPanel.verticalNormalizedPosition = 1f;
+        }
     }
 
     void Update()
@@ -37,7 +42,6 @@ public class UIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
             RestartLevel();
 
-        // only allow H toggle during Building
         if (GameManager.Instance.CurrentState == GameManager.GameState.Building
             && Input.GetKeyDown(KeyCode.H))
         {
@@ -52,6 +56,28 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void LoadNextLevel()
+    {
+        Time.timeScale = 1f;
+        int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
+
+        if (nextIndex < SceneManager.sceneCountInBuildSettings)
+        {
+            SceneManager.LoadScene(nextIndex);
+        }
+        else
+        {
+            Debug.LogWarning("No more levels! Reloading current level.");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
+    public void ReturnToMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu");  // make sure the name matches your main menu scene
     }
 
     public void ToggleUI()
@@ -85,13 +111,10 @@ public class UIManager : MonoBehaviour
     public void TogglePause()
     {
         isPaused = !isPaused;
+        gameplayUI.SetActive(!isPaused);
+        startButton.SetActive(!isPaused);
+        stopButton.SetActive(!isPaused);
         pausePanel.SetActive(isPaused);
         Time.timeScale = isPaused ? 0f : 1f;
-    }
-
-    public void ReturnToMenu()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("LevelSelect");
     }
 }
