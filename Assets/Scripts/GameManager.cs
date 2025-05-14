@@ -12,8 +12,11 @@ public class GameManager : MonoBehaviour
     public GameObject ballPrefab;
     public Transform ballSpawnPoint;
     public Transform padsParent; // Parent object holding all pads
+    public GameObject evilBallPrefab;
+    public Transform evilBallSpawnPoint;
 
     GameObject currentBall;
+    GameObject evilBall;
 
     void Awake()
     {
@@ -28,6 +31,11 @@ public class GameManager : MonoBehaviour
 
         CurrentState = GameState.Playing;
         currentBall = Instantiate(ballPrefab, ballSpawnPoint.position, Quaternion.identity);
+
+        if (evilBallPrefab != null)
+        {
+            evilBall = Instantiate(evilBallPrefab, evilBallSpawnPoint.position, Quaternion.identity);
+        }
 
         // disable building UI/controls
         BuildManager.Instance.DisableBuilding();
