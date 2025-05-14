@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3224113929747328516}
   - component: {fileID: 4196020387112891717}
   - component: {fileID: 6529477684219449922}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ShrinkPad
   m_TagString: Untagged
   m_Icon: {fileID: 0}

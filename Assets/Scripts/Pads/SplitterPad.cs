@@ -2,29 +2,42 @@ using UnityEngine;
 
 public class SplitterPad : MonoBehaviour
 {
+    [Header("Prefabs")]
     public GameObject ballPrefab;
+    public GameObject evilBallPrefab;
+
+    [Header("Split Settings")]
     public float splitSpeed = 10f;
-    public float newScale = 0.5f; // Optional: make split balls smaller
-    public bool canTrigger = true;
+    public float newScale = 0.5f;  
+
+    bool canTrigger = true;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Ball") && canTrigger)
+        if (!canTrigger) return;
+
+        if (collision.gameObject.name.StartsWith("Ball") || collision.gameObject.name.StartsWith("EvilBall"))
         {
-            Vector3 position = this.transform.position;
+            GameObject prefabToUse = name.StartsWith("EvilBall")
+                ? evilBallPrefab
+                : ballPrefab;
+
+            Vector3 spawnPos = transform.position;
+
             Destroy(collision.gameObject);
 
-            // Create two new balls
-            CreateSplitBall(position + new Vector3(1, 0, 0), new Vector2(1, 1).normalized);
-            CreateSplitBall(position + new Vector3(-1, 0, 0), new Vector2(-1, 1).normalized);
+            CreateSplitBall(prefabToUse, spawnPos + Vector3.right, new Vector2(1, 1).normalized);
+            CreateSplitBall(prefabToUse, spawnPos + Vector3.left, new Vector2(-1, 1).normalized);
+
             canTrigger = false;
         }
     }
 
-    void CreateSplitBall(Vector3 position, Vector2 direction)
+    private void CreateSplitBall(GameObject prefab, Vector3 position, Vector2 direction)
     {
-        GameObject newBall = Instantiate(ballPrefab, position, Quaternion.identity);
+        GameObject newBall = Instantiate(prefab, position, Quaternion.identity);
         newBall.transform.localScale *= newScale;
+
         Rigidbody2D rb = newBall.GetComponent<Rigidbody2D>();
         if (rb != null)
         {

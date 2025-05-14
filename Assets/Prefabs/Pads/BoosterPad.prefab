@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5109780612601596509}
   - component: {fileID: 7177301556711275425}
   - component: {fileID: 7526559729116019571}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BoosterPad
   m_TagString: Untagged
   m_Icon: {fileID: 0}

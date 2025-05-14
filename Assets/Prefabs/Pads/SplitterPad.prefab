@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2029449880422499292}
   - component: {fileID: 8411216141023884361}
   - component: {fileID: 5389599557198121627}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SplitterPad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,6 +148,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballPrefab: {fileID: 257174830864813133, guid: 6b5318c36e7a06f43894ec94ca3895ad, type: 3}
+  evilBallPrefab: {fileID: 257174830864813133, guid: 2dc8d52db155b2c4497d3b7b22b98146, type: 3}
   splitSpeed: 5
   newScale: 0.5
-  canTrigger: 1

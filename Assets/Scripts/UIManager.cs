@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
 
     bool uiHidden = false;
     bool isPaused = false;
+    bool _wasPlaying = false;  // remembers what state we were in before pausing
 
     void Awake()
     {
@@ -32,9 +33,7 @@ public class UIManager : MonoBehaviour
         stopButton.SetActive(false);
 
         if (blockSelectionPanel != null)
-        {
             blockSelectionPanel.verticalNormalizedPosition = 1f;
-        }
     }
 
     void Update()
@@ -43,12 +42,12 @@ public class UIManager : MonoBehaviour
             RestartLevel();
 
         if (GameManager.Instance.CurrentState == GameManager.GameState.Building
-            && Input.GetKeyDown(KeyCode.H))
+            && Input.GetKeyDown(KeyCode.H) && !winPanel.activeSelf)
         {
             ToggleUI();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !winPanel.activeSelf)
             TogglePause();
     }
 
@@ -62,26 +61,21 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
-
         if (nextIndex < SceneManager.sceneCountInBuildSettings)
-        {
             SceneManager.LoadScene(nextIndex);
-        }
         else
-        {
-            Debug.LogWarning("No more levels! Reloading current level.");
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
     }
 
     public void ReturnToMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");  // make sure the name matches your main menu scene
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void ToggleUI()
     {
+        TooltipManager.Instance.HideTooltip();
         uiHidden = !uiHidden;
         gameplayUI.SetActive(!uiHidden);
     }
@@ -105,16 +99,48 @@ public class UIManager : MonoBehaviour
         gameplayUI.SetActive(true);
         startButton.SetActive(true);
         stopButton.SetActive(false);
-        if (isPaused) TogglePause();
+        if (isPaused)
+            TogglePause();  // ensure pause UI clears if we stopped while paused
     }
 
     public void TogglePause()
     {
         isPaused = !isPaused;
-        gameplayUI.SetActive(!isPaused);
-        startButton.SetActive(!isPaused);
-        stopButton.SetActive(!isPaused);
+        if (isPaused)
+        {
+            // entering pause: record if we were playing
+            _wasPlaying = (GameManager.Instance.CurrentState == GameManager.GameState.Playing);
+        }
+
+        // show/hide the pause panel
         pausePanel.SetActive(isPaused);
-        Time.timeScale = isPaused ? 0f : 1f;
+
+        if (isPaused)
+        {
+            // hide gameplay UI while paused
+            gameplayUI.SetActive(false);
+            startButton.SetActive(false);
+            stopButton.SetActive(false);
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            // unpausing: restore UI based on pre-pause game state
+            Time.timeScale = 1f;
+            if (_wasPlaying)
+            {
+                // We were in play mode: show stop button
+                gameplayUI.SetActive(false);
+                startButton.SetActive(false);
+                stopButton.SetActive(true);
+            }
+            else
+            {
+                // We were in build mode: show start button
+                gameplayUI.SetActive(true);
+                startButton.SetActive(true);
+                stopButton.SetActive(false);
+            }
+        }
     }
 }

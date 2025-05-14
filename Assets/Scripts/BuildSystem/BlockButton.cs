@@ -1,58 +1,55 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
-public class BlockButton : MonoBehaviour
+public class BlockButton : MonoBehaviour,
+    IPointerEnterHandler, IPointerExitHandler
 {
-    #region Inspector
-    public Image iconImage;    // assign child Icon Image
-    public TMP_Text countText;    // assign child TextMeshPro text
-    #endregion
+    public Image iconImage;
+    public TMP_Text countText;
 
-    #region Private
     private Button _button;
     private BuildManager _buildManager;
     private int _typeIndex;
-    #endregion
+    private string _header;
+    private string _description;
 
-    #region Initialization
-    /// <summary>
-    /// Called by BuildManager to set up this button.
-    /// </summary>
-    public void Init(BuildManager bm, int typeIndex, Sprite icon, int startCount)
+    public void Init(BuildManager bm, int typeIndex, Sprite icon, int startCount, string header, string description)
     {
         _buildManager = bm;
         _typeIndex = typeIndex;
+        _header = header;
+        _description = description;
 
-        // cache button component & hook click
         _button = GetComponent<Button>();
         _button.onClick.AddListener(OnClick);
 
-        // set icon + initial count
         iconImage.sprite = icon;
         UpdateCount(startCount);
     }
-    #endregion
 
-    #region Public API
     public void UpdateCount(int newCount)
     {
         countText.text = newCount.ToString();
-        bool hasBlocks = newCount > 0;
-
-        // clickable only if >0
-        _button.interactable = hasBlocks;
-        // icon tinted gray if none left
-        iconImage.color = hasBlocks
-            ? Color.white
-            : Color.gray;
+        bool has = newCount > 0;
+        _button.interactable = has;
+        iconImage.color = has ? Color.white : Color.gray;
     }
-    #endregion
 
-    #region Event Handlers
-    private void OnClick()
+    void OnClick()
     {
         _buildManager.SelectBlockType(_typeIndex);
     }
-    #endregion
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (_button.interactable)
+            TooltipManager.Instance.ShowTooltip(_header, _description);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        TooltipManager.Instance.HideTooltip();
+    }
 }

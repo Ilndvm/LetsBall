@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5773b735fcb1974caa206deeb5d4ec9, type: 3}
+  m_Name: Magnet
+  m_EditorClassIdentifier: 
+  blockName: Magnet
+  icon: {fileID: -1258010544, guid: 9bb5a4784c37a2242aedece90c523b1b, type: 3}
+  prefab: {fileID: 3632105090239935929, guid: e64baec760bde5d48a3a38836f00ff27, type: 3}
+  maxCount: 1
+  description: Pull ball toward magnet center
