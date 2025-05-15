@@ -77,6 +77,7 @@ public class UIManager : MonoBehaviour
     {
         TooltipManager.Instance.HideTooltip();
         uiHidden = !uiHidden;
+        startButton.SetActive(!uiHidden);
         gameplayUI.SetActive(!uiHidden);
     }
 

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - FinishPoint
   - Ball
+  - Star
   layers:
   - Default
   - TransparentFX

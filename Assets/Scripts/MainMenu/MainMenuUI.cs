@@ -6,6 +6,7 @@ public class MainMenuUI : MonoBehaviour
 {
     [Header("Panels")]
     public GameObject mainMenuPanel;
+    public GameObject levelPanel;
     public GameObject settingsPanel;
     public GameObject creditsPanel;
     public GameObject questionsPanel;
@@ -33,7 +34,8 @@ public class MainMenuUI : MonoBehaviour
     // Called by Start button
     public void OnStartButton()
     {
-        SceneManager.LoadScene(levelToLoad);
+        mainMenuPanel.SetActive(false);
+        levelPanel.SetActive(true);
     }
 
     // Called by Settings button
@@ -66,6 +68,7 @@ public class MainMenuUI : MonoBehaviour
     void ShowMainMenu()
     {
         mainMenuPanel.SetActive(true);
+        levelPanel.SetActive(false);
         settingsPanel.SetActive(false);
         creditsPanel.SetActive(false);
         questionsPanel.SetActive(false);

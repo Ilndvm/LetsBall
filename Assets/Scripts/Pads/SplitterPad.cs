@@ -18,10 +18,11 @@ public class SplitterPad : MonoBehaviour
 
         if (collision.gameObject.name.StartsWith("Ball") || collision.gameObject.name.StartsWith("EvilBall"))
         {
-            GameObject prefabToUse = name.StartsWith("EvilBall")
+            GameObject prefabToUse = collision.gameObject.name.StartsWith("EvilBall")
                 ? evilBallPrefab
                 : ballPrefab;
 
+            Debug.Log(prefabToUse.name);
             Vector3 spawnPos = transform.position;
 
             Destroy(collision.gameObject);

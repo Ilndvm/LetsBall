@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // Controls the game state: Building vs Playing, ball spawning, win/stop logic
 public class GameManager : MonoBehaviour
@@ -65,8 +66,14 @@ public class GameManager : MonoBehaviour
     public void Win()
     {
         CurrentState = GameState.Building;
+
+        if (ProgressManager.Instance != null)
+        {
+            int levelIndex = SceneManager.GetActiveScene().buildIndex;
+            ProgressManager.Instance.UnlockNextLevel(levelIndex);
+        }
+
         UIManager.Instance.ShowWinScreen();
-        Debug.Log("YOU WIN!");
     }
 
     public void ResetScripts()

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BallController : MonoBehaviour
 {
@@ -30,6 +31,17 @@ public class BallController : MonoBehaviour
             rb.bodyType = RigidbodyType2D.Static;
 
             GameManager.Instance.Win();
+        }
+
+        if (collision.CompareTag("Star"))
+        {
+            int levelIndex = SceneManager.GetActiveScene().buildIndex;
+            if (ProgressManager.Instance != null)
+            {
+                int prev = ProgressManager.Instance.GetStars(levelIndex);
+                ProgressManager.Instance.SaveStars(levelIndex, Mathf.Min(prev + 1, 3));
+            }
+            Destroy(collision.gameObject);
         }
     }
 }
