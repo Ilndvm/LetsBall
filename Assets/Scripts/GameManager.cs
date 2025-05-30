@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
 
         CurrentState = GameState.Playing;
         currentBall = Instantiate(ballPrefab, ballSpawnPoint.position, Quaternion.identity);
+        AudioManager.Instance.PlaySound(AudioManager.Sound.StartPoint);
 
         if (evilBallPrefab != null)
         {

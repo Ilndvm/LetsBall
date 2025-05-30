@@ -14,6 +14,8 @@ public class BoosterPad2D : MonoBehaviour
             {
                 rb.AddForce(boostDirection.normalized * boostForce, ForceMode2D.Impulse);
             }
+
+            AudioManager.Instance.PlaySound(AudioManager.Sound.BoosterPad);
         }
     }
 }

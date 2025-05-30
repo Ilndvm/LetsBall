@@ -11,6 +11,7 @@ public class GravityPad : MonoBehaviour
             {
                 rb.gravityScale *= -1f;
             }
+            AudioManager.Instance.PlaySound(AudioManager.Sound.GravityPad, 0.5f);
         }
     }
 }

@@ -30,6 +30,7 @@ public class BallController : MonoBehaviour
             // make completely static so it can't move or rotate
             rb.bodyType = RigidbodyType2D.Static;
 
+            AudioManager.Instance.PlaySound(AudioManager.Sound.FinishPoint);
             GameManager.Instance.Win();
         }
 
@@ -41,6 +42,9 @@ public class BallController : MonoBehaviour
                 int prev = ProgressManager.Instance.GetStars(levelIndex);
                 ProgressManager.Instance.SaveStars(levelIndex, Mathf.Min(prev + 1, 3));
             }
+
+            AudioManager.Instance.PlaySound(AudioManager.Sound.Collectible);
+
             Destroy(collision.gameObject);
         }
     }

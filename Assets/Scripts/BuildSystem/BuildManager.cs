@@ -226,6 +226,8 @@ public class BuildManager : MonoBehaviour
             DestroyPlacementPreview();
             _selectedType = -1;
         }
+
+        AudioManager.Instance.PlaySound(AudioManager.Sound.BlockPlaced);
     }
 
     void TryRemove(Vector3Int cell)
@@ -240,6 +242,8 @@ public class BuildManager : MonoBehaviour
         var runtime = _runtimes[idx];
         runtime.currentCount++;
         runtime.buttonUI.UpdateCount(runtime.currentCount);
+
+        AudioManager.Instance.PlaySound(AudioManager.Sound.BlockRemoved);
     }
 
     public void DisableBuilding()

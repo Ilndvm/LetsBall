@@ -149,6 +149,7 @@ MonoBehaviour:
   defaultStarSprite: {fileID: 1993206010, guid: 9bb5a4784c37a2242aedece90c523b1b, type: 3}
   defaultButtonColor: {r: 0.5137255, g: 0.46274513, b: 0.6117647, a: 1}
   perfectButtonColor: {r: 0.9960785, g: 0.6392157, b: 0, a: 1}
+  audioManager: {fileID: 696104310245872232, guid: 0213411995ed9264c8a344542062866f, type: 3}
 --- !u!1 &951283256774332353
 GameObject:
   m_ObjectHideFlags: 0

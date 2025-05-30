@@ -30,6 +30,9 @@ public class JumpPad2D : MonoBehaviour
                 Vector2 jumpDirection = Vector2.up;
                 rb.AddForce(jumpDirection * jumpForce, ForceMode2D.Impulse);
             }
+
+            AudioManager.Instance.PlaySound(AudioManager.Sound.JumpPad);
+
         }
     }
 

@@ -40,6 +40,7 @@ public class BlockButton : MonoBehaviour,
     void OnClick()
     {
         _buildManager.SelectBlockType(_typeIndex);
+        AudioManager.Instance.PlaySound(AudioManager.Sound.BlockChoice);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using static AudioManager;
 
 public class LevelButtonUI : MonoBehaviour
 {
@@ -43,6 +44,9 @@ public class LevelButtonUI : MonoBehaviour
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() =>
                 UnityEngine.SceneManagement.SceneManager.LoadScene(levelIndex)
+            );
+            button.onClick.AddListener(() =>
+                AudioManager.Instance.PlaySound(AudioManager.Sound.ButtonSelect)
             );
         }
     }
