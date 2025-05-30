@@ -46,7 +46,7 @@ public class LevelButtonUI : MonoBehaviour
                 UnityEngine.SceneManagement.SceneManager.LoadScene(levelIndex)
             );
             button.onClick.AddListener(() =>
-                AudioManager.Instance.PlaySound(AudioManager.Sound.ButtonSelect)
+                AudioManager.Instance.PlayUISound(AudioManager.Sound.ButtonSelect)
             );
         }
     }

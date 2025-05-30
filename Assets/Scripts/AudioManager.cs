@@ -16,7 +16,8 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
 
-    [SerializeField] private AudioSource soundObject;
+    [SerializeField] private AudioSource soundFXObject;
+    [SerializeField] private AudioSource soundUIObject;
 
     public enum Sound {
         BoosterPad,
@@ -49,7 +50,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(Sound sound)
     {
-        AudioSource audioSource = Instantiate(soundObject, this.transform);
+        AudioSource audioSource = Instantiate(soundFXObject, this.transform);
 
         audioSource.clip = GetAudioClip(sound);
         audioSource.volume = 1;
@@ -61,10 +62,21 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(Sound sound, float volume)
     {
-        AudioSource audioSource = Instantiate(soundObject, this.transform);
+        AudioSource audioSource = Instantiate(soundFXObject, this.transform);
 
         audioSource.clip = GetAudioClip(sound);
         audioSource.volume = volume;
+        audioSource.Play();
+        float clipLength = audioSource.clip.length;
+
+        Destroy(audioSource.gameObject, clipLength);
+    }
+    public void PlayUISound(Sound sound)
+    {
+        AudioSource audioSource = Instantiate(soundUIObject, this.transform);
+
+        audioSource.clip = GetAudioClip(sound);
+        audioSource.volume = 1;
         audioSource.Play();
         float clipLength = audioSource.clip.length;
 
@@ -74,7 +86,7 @@ public class AudioManager : MonoBehaviour
     public void PlaySound(AudioClip clip)
     {
         // Create a temporary AudioSource
-        AudioSource audioSource = Instantiate(soundObject, this.transform);
+        AudioSource audioSource = Instantiate(soundUIObject, this.transform);
         audioSource.clip = clip;
         audioSource.volume = 1f;
         audioSource.Play();
@@ -82,7 +94,6 @@ public class AudioManager : MonoBehaviour
         // Destroy the temporary object after the clip finishes
         Destroy(audioSource.gameObject, clip.length);
     }
-
     public AudioClip GetAudioClip(Sound sound) {
 
         foreach (SoundAudioClip soundAudioClip in soundAudioClipArray)

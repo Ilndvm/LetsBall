@@ -25,5 +25,12 @@ public class KillPad : MonoBehaviour
 
             AudioManager.Instance.PlaySound(AudioManager.Sound.KillPad);
         }
+        else if (collision.gameObject.name.StartsWith("BackgroundBall"))
+        {
+            Destroy(collision.gameObject);
+            Debug.Log("BackgroundBall destroyed by KillPad!");
+
+            Instantiate(deathParticle, collision.transform.position, Quaternion.identity);
+        }
     }
 }
